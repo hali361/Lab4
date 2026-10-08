@@ -1,3 +1,23 @@
-from classes import Team, Driver
+from classes1 import Team, Driver
 
-# your code here
+
+def main():
+    teams = []
+    teams_by_name = {}
+    with open("f1_points.csv", encoding="utf-8") as data_file:
+        next(data_file)
+        for line in data_file:
+            driver_name, team_name, points = line.strip().split(",")
+            if team_name not in teams_by_name:
+                team = Team(team_name)
+                teams_by_name[team_name] = team
+                teams.append(team)
+
+            driver = Driver(driver_name, int(points))
+            teams_by_name[team_name].add_driver(driver)
+
+    for team in sorted(teams):
+        print(team)
+
+
+main()
